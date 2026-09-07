@@ -10,7 +10,7 @@
   "isLaserSight": true,
   "soundID": 0,
   "muzzleFlashEffectTag" : "MuzzleEffect_Rocket_01",
-  "muzzleFlashEffectScale" :  [5.0, 5.0, 5.0],
+  "muzzleFlashEffectScale" :  [3.0, 3.0, 3.0],
   "bulletType": "EXPLOSION",
   "bulletParam": 
   {
@@ -53,12 +53,12 @@
       "type" : "MODEL",
       "bulletMaterialTag" : "Bullet_01",
       "trailDrawTime" : 30,
-      "trailWidth" : 5.0,
+      "trailWidth" : 3.0,
       "enableFlightSmoke" : true,
       "smokeInterval" : 0.001,
       "smokeSize" : 1.0,                     
       "smokeEffectTag" : "Fragment_Smoke_01",
-      "trailColor" : [6.0, 0.0, 4.0],
+      "trailColor" : [5.0, 1.0, 4.0],
       "scale" : [10.0, 10.0, 10.0],
 
       "custom" :

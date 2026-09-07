@@ -44,8 +44,8 @@ using namespace VECTOR4;
 using namespace VECTOR3;
 using namespace VECTOR2;
 
-constexpr int ENEMY_OCT_NUM = 0;
-constexpr int ENEMY_ANT_NUM = 1000;
+constexpr int ENEMY_OCT_NUM = 5;
+constexpr int ENEMY_ANT_NUM = 500;
 
 //*---------------------------------------------------------------------------------------
 //* @:c_Game_LoadProcess Class 
@@ -438,7 +438,7 @@ void c_Game_LoadProcess::OnExit(SceneManager* pOwner)
         model.MatNum = 2;
         model.IsActive = true;
         model.SetupMaterial = matInfo;
-        model.ShaderType = SHADER_TYPE::DEFERRED_STD_STATIC;
+        model.ShaderType = SHADER_TYPE::DEFERRED_STD_STATIC_N;
 
         for (int i = 0; i < ENEMY_OCT_NUM; i++)
         {

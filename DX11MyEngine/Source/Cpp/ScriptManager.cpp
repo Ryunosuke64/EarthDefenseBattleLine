@@ -195,14 +195,14 @@ bool ScriptManager::LoadScript(const std::string& _filePath)
     int r = builder.StartNewModule(m_pEngine, "MyModule");
     if (r < 0)
     {
-        MessageBoxA(NULL, "モジュール作成失敗", "ScriptManager", MB_OK);
+        ErrorMessage(L"モジュール作成失敗\n", L"ScriptManager");
         return false;
     }
 
     r = builder.AddSectionFromFile(_filePath.c_str());
     if (r < 0)
     {
-        print("ファイル読み込み失敗\n");
+        ErrorMessage(L"ファイル読み込み失敗\n", L"ScriptManager");
         return false;
     }
 
