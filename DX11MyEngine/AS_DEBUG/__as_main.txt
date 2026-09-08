@@ -6,10 +6,10 @@ Variables:
 
 
 - 4,5 -
-    0   0 *    PGA      0x1e3683c0          (str:Hello world
-)
-    3   2 *    CALLSYS  1, 136           (void print(const string&in))
+    0   0 *    PGA      0xe1152610          (str:aaa)
+    3   2 *    PGA      0xe1151690          (str:わわわ)
+    6   4 *    CALLSYS  2, 136           (void ErrorMesageBox(const string&in, const string&in))
 - 5,2 -
-    5   0 *    SUSPEND
+    8   0 *    SUSPEND
             0:
-    6   0 *    RET      0
+    9   0 *    RET      0

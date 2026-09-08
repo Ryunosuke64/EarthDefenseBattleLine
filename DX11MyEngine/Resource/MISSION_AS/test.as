@@ -1,5 +1,7 @@
 
 void as_main()
 {
-    print("Hello world\n");
-}
+    float deltaTime = GetDeltaTime();
+    string deltaTimeStr = deltaTime;
+    ErrorMesageBox("デルタタイム",deltaTimeStr);
+}   

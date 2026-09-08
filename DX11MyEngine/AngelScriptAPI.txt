@@ -1,0 +1,184 @@
+// AngelScript 2.39.0 WIP
+// Lib options  AS_64BIT_PTR AS_WIN AS_X64_MSVC 
+// Engine properties
+ep 0 0
+ep 1 0
+ep 2 1
+ep 3 1
+ep 4 0
+ep 5 0
+ep 6 0
+ep 7 0
+ep 8 0
+ep 9 1
+ep 10 0
+ep 11 1
+ep 12 0
+ep 13 0
+ep 14 3
+ep 15 0
+ep 16 1
+ep 17 0
+ep 18 0
+ep 19 1
+ep 20 0
+ep 21 0
+ep 22 0
+ep 23 0
+ep 24 0
+ep 25 0
+ep 26 1
+ep 27 100
+ep 28 1
+ep 29 4096
+ep 30 10
+ep 31 0
+ep 32 0
+ep 33 0
+ep 34 0
+ep 35 1
+ep 36 0
+ep 37 0
+ep 38 1
+ep 39 0
+ep 40 1
+
+// Enums
+
+// Types
+access ffffffff
+objtype "array<T>" 69
+objtype "string" 7938
+funcdef "bool array<T>::less(const T&in, const T&in)"
+
+// Template type members
+objbeh "array<T>" 3 "array<T>@ array(int&in)"
+objbeh "array<T>" 3 "array<T>@ array(int&in, uint)"
+objbeh "array<T>" 3 "array<T>@ array(int&in, uint, const T&in)"
+objbeh "array<T>" 5 "void $beh5()"
+objbeh "array<T>" 6 "void $beh6()"
+objbeh "array<T>" 9 "int $beh9()"
+objbeh "array<T>" 10 "void $beh10()"
+objbeh "array<T>" 11 "bool $beh11()"
+objbeh "array<T>" 12 "void $beh12(int&in)"
+objbeh "array<T>" 13 "void $beh13(int&in)"
+objbeh "array<T>" 8 "bool $beh8(int&in, bool&out)"
+objbeh "array<T>" 4 "array<T>@ $list(int&in, int&in) { repeat T }"
+objmthd "array<T>" "T& opIndex(uint)"
+objmthd "array<T>" "const T& opIndex(uint) const"
+objmthd "array<T>" "uint opForBegin() const"
+objmthd "array<T>" "bool opForEnd(uint) const"
+objmthd "array<T>" "uint opForNext(uint) const"
+objmthd "array<T>" "const T& opForValue0(uint) const"
+objmthd "array<T>" "uint opForValue1(uint) const"
+objmthd "array<T>" "array<T>& opAssign(const array<T>&in)"
+objmthd "array<T>" "void insertAt(uint, const T&in)"
+objmthd "array<T>" "void insertAt(uint, const array<T>&inout)"
+objmthd "array<T>" "void insertLast(const T&in)"
+objmthd "array<T>" "void removeAt(uint)"
+objmthd "array<T>" "void removeLast()"
+objmthd "array<T>" "void removeRange(uint, uint)"
+objmthd "array<T>" "uint length() const"
+objmthd "array<T>" "void reserve(uint)"
+objmthd "array<T>" "void resize(uint)"
+objmthd "array<T>" "void sortAsc()"
+objmthd "array<T>" "void sortAsc(uint, uint)"
+objmthd "array<T>" "void sortDesc()"
+objmthd "array<T>" "void sortDesc(uint, uint)"
+objmthd "array<T>" "void reverse()"
+objmthd "array<T>" "int find(const T&in) const"
+objmthd "array<T>" "int find(uint, const T&in) const"
+objmthd "array<T>" "int findByRef(const T&in) const"
+objmthd "array<T>" "int findByRef(uint, const T&in) const"
+objmthd "array<T>" "bool opEquals(const array<T>&in) const"
+objmthd "array<T>" "bool isEmpty() const"
+objmthd "array<T>" "void sort(array<T>::less&in, uint = 0, uint = uint(-1))"
+
+// Type members
+objbeh "string" 2 "void string()"
+objbeh "string" 0 "void string()"
+objbeh "string" 0 "void string(const string&in)"
+objmthd "string" "string& opAssign(const string&in)"
+objmthd "string" "string& opAddAssign(const string&in)"
+objmthd "string" "bool opEquals(const string&in) const"
+objmthd "string" "int opCmp(const string&in) const"
+objmthd "string" "string opAdd(const string&in) const"
+objmthd "string" "uint length() const"
+objmthd "string" "void resize(uint)"
+objmthd "string" "bool isEmpty() const"
+objmthd "string" "uint8& opIndex(uint)"
+objmthd "string" "const uint8& opIndex(uint) const"
+objmthd "string" "string& opAssign(double)"
+objmthd "string" "string& opAddAssign(double)"
+objmthd "string" "string opAdd(double) const"
+objmthd "string" "string opAdd_r(double) const"
+objmthd "string" "string& opAssign(float)"
+objmthd "string" "string& opAddAssign(float)"
+objmthd "string" "string opAdd(float) const"
+objmthd "string" "string opAdd_r(float) const"
+objmthd "string" "string& opAssign(int64)"
+objmthd "string" "string& opAddAssign(int64)"
+objmthd "string" "string opAdd(int64) const"
+objmthd "string" "string opAdd_r(int64) const"
+objmthd "string" "string& opAssign(uint64)"
+objmthd "string" "string& opAddAssign(uint64)"
+objmthd "string" "string opAdd(uint64) const"
+objmthd "string" "string opAdd_r(uint64) const"
+objmthd "string" "string& opAssign(bool)"
+objmthd "string" "string& opAddAssign(bool)"
+objmthd "string" "string opAdd(bool) const"
+objmthd "string" "string opAdd_r(bool) const"
+objmthd "string" "string substr(uint = 0, int = -1) const"
+objmthd "string" "int findFirst(const string&in, uint = 0) const"
+objmthd "string" "int findFirstOf(const string&in, uint = 0) const"
+objmthd "string" "int findFirstNotOf(const string&in, uint = 0) const"
+objmthd "string" "int findLast(const string&in, int = -1) const"
+objmthd "string" "int findLastOf(const string&in, int = -1) const"
+objmthd "string" "int findLastNotOf(const string&in, int = -1) const"
+objmthd "string" "void insert(uint, const string&in)"
+objmthd "string" "void erase(uint, int = -1)"
+objmthd "string" "int regexFind(const string&in, uint = 0, uint&out = void) const"
+
+// Functions
+func "uint scan(const string&in, ?&out...)"
+func "string format(const string&in, const ?&in...)"
+func "string formatInt(int64, const string&in = \"\", uint = 0)"
+func "string formatUInt(uint64, const string&in = \"\", uint = 0)"
+func "string formatFloat(double, const string&in = \"\", uint = 0, uint = 0)"
+func "int64 parseInt(const string&in, uint = 10, uint&out = 0)"
+func "uint64 parseUInt(const string&in, uint = 10, uint&out = 0)"
+func "double parseFloat(const string&in, uint&out = 0)"
+func "float fpFromIEEE(uint)"
+func "uint fpToIEEE(float)"
+func "double fpFromIEEE(uint64)"
+func "uint64 fpToIEEE(double)"
+func "bool closeTo(float, float, float = 0.00001f)"
+func "bool closeTo(double, double, double = 0.0000000001)"
+func "float cos(float)"
+func "float sin(float)"
+func "float tan(float)"
+func "float acos(float)"
+func "float asin(float)"
+func "float atan(float)"
+func "float atan2(float, float)"
+func "float cosh(float)"
+func "float sinh(float)"
+func "float tanh(float)"
+func "float log(float)"
+func "float log10(float)"
+func "float pow(float, float)"
+func "float sqrt(float)"
+func "float ceil(float)"
+func "float abs(float)"
+func "float floor(float)"
+func "float fraction(float)"
+func "void ErrorMesageBox(const string&in, const string&in)"
+func "float GetDeltaTime()"
+
+// Properties
+
+// String factory
+strfactory "string"
+
+// Default array type
+defarray "array<T>"

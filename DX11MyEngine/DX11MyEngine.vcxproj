@@ -189,6 +189,10 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Header\Ant_StateHeader.h" />
+    <ClInclude Include="Source\Header\AS_AudioAPI.h" />
+    <ClInclude Include="Source\Header\AS_CoreAPI.h" />
+    <ClInclude Include="Source\Header\AS_GameAPI.h" />
+    <ClInclude Include="Source\Header\AS_MathAPI.h" />
     <ClInclude Include="Source\Header\BitFlag.h" />
     <ClInclude Include="Source\Header\BlendManager.h" />
     <ClInclude Include="Source\Header\BuildingManager.h" />
@@ -368,6 +372,7 @@
     <ClInclude Include="Source\Header\Window.h" />
     <ClInclude Include="Source\Lib\angelscript\add_on\scriptarray\scriptarray.h" />
     <ClInclude Include="Source\Lib\angelscript\add_on\scriptbuilder\scriptbuilder.h" />
+    <ClInclude Include="Source\Lib\angelscript\add_on\scripthelper\scripthelper.h" />
     <ClInclude Include="Source\Lib\angelscript\add_on\scriptmath\scriptmath.h" />
     <ClInclude Include="Source\Lib\angelscript\add_on\scriptmath\scriptmathcomplex.h" />
     <ClInclude Include="Source\Lib\angelscript\add_on\scriptstdstring\scriptstdstring.h" />
@@ -401,6 +406,10 @@
     <ClCompile Include="Source\Cpp\Ant_PT_IdleState.cpp" />
     <ClCompile Include="Source\Cpp\Ant_AT_TrackingState.cpp" />
     <ClCompile Include="Source\Cpp\Ant_PT_MoveState.cpp" />
+    <ClCompile Include="Source\Cpp\AS_AudioAPI.cpp" />
+    <ClCompile Include="Source\Cpp\AS_CoreAPI.cpp" />
+    <ClCompile Include="Source\Cpp\AS_GameAPI.cpp" />
+    <ClCompile Include="Source\Cpp\AS_MathAPI.cpp" />
     <ClCompile Include="Source\Cpp\BitFlag.cpp" />
     <ClCompile Include="Source\Cpp\BlendManager.cpp" />
     <ClCompile Include="Source\Cpp\BuildingManager.cpp" />
@@ -701,6 +710,12 @@
     <ClCompile Include="Source\Lib\angelscript\add_on\scriptbuilder\scriptbuilder.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Lib\angelscript\add_on\scripthelper\scripthelper.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\Lib\angelscript\add_on\scriptmath\scriptmath.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>

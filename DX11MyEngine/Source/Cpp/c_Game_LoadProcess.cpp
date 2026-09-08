@@ -44,7 +44,7 @@ using namespace VECTOR4;
 using namespace VECTOR3;
 using namespace VECTOR2;
 
-constexpr int ENEMY_OCT_NUM = 5;
+constexpr int ENEMY_OCT_NUM = 0;
 constexpr int ENEMY_ANT_NUM = 500;
 
 //*---------------------------------------------------------------------------------------

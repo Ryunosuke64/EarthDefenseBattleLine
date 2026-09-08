@@ -319,6 +319,27 @@
     <Filter Include="外部ライブラリ\AS_add_on\scriptmath">
       <UniqueIdentifier>{64de6292-17d2-43ac-91fc-b7dd7837d056}</UniqueIdentifier>
     </Filter>
+    <Filter Include="外部ライブラリ\AS_add_on\scripthelper">
+      <UniqueIdentifier>{c6be8de8-efa6-4891-bf4c-7a55098fb7d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scripts">
+      <UniqueIdentifier>{c7cd21bd-0d9c-401e-891f-d0d5d5bbb237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scripts\RegisterAPI">
+      <UniqueIdentifier>{c01b761f-da1f-4cd1-94ac-b042082fc09a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scripts\RegisterAPI\Core">
+      <UniqueIdentifier>{b020506c-214d-47f3-943e-77d60e5bc1fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scripts\RegisterAPI\Game">
+      <UniqueIdentifier>{90a3aa94-e5c4-4fe4-9997-c8be8ae532e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scripts\RegisterAPI\Audio">
+      <UniqueIdentifier>{8c27c838-d6ef-4942-8910-cebf614a71c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scripts\RegisterAPI\Math">
+      <UniqueIdentifier>{0a058e16-537c-48c3-a6e1-08eee4c287d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Cpp\SHADER.cpp">
@@ -867,6 +888,21 @@
     <ClCompile Include="Source\Lib\angelscript\add_on\scriptmath\scriptmathcomplex.cpp">
       <Filter>外部ライブラリ\AS_add_on\scriptmath</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Lib\angelscript\add_on\scripthelper\scripthelper.cpp">
+      <Filter>外部ライブラリ\AS_add_on\scripthelper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cpp\AS_CoreAPI.cpp">
+      <Filter>ソース ファイル\Scripts\RegisterAPI\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cpp\AS_MathAPI.cpp">
+      <Filter>ソース ファイル\Scripts\RegisterAPI\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cpp\AS_GameAPI.cpp">
+      <Filter>ソース ファイル\Scripts\RegisterAPI\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cpp\AS_AudioAPI.cpp">
+      <Filter>ソース ファイル\Scripts\RegisterAPI\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Header\SHADER.h">
@@ -1393,6 +1429,21 @@
     </ClInclude>
     <ClInclude Include="Source\Lib\angelscript\add_on\scriptmath\scriptmathcomplex.h">
       <Filter>外部ライブラリ\AS_add_on\scriptmath</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Lib\angelscript\add_on\scripthelper\scripthelper.h">
+      <Filter>外部ライブラリ\AS_add_on\scripthelper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\AS_CoreAPI.h">
+      <Filter>ソース ファイル\Scripts\RegisterAPI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\AS_MathAPI.h">
+      <Filter>ソース ファイル\Scripts\RegisterAPI\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\AS_GameAPI.h">
+      <Filter>ソース ファイル\Scripts\RegisterAPI\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\AS_AudioAPI.h">
+      <Filter>ソース ファイル\Scripts\RegisterAPI\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

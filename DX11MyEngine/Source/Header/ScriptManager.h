@@ -1,5 +1,6 @@
 #pragma once
 #include <angelscript.h>
+#include "AS_CoreAPI.h"
 
 // ***************************************************************************************
 // ---------------------------------------------------------------------------------------
@@ -7,7 +8,8 @@
 //
 //  ★★★シングルトン★★★
 //
-// 【?】AngelScriptの管理
+// 【?】ASエンジンの生成・終了、
+//      モジュール管理、関数実行、エラー処理
 //
 // ***************************************************************************************
 class ScriptManager
@@ -25,12 +27,19 @@ public:
     
 	void Term();
 
-    bool LoadScript(const std::string& _filePath);
-
+    bool LoadScript(const std::string& _moduleName, const std::string& _filePath);
+    bool StartScript(const std::string& moduleName);
+    bool UpdateScript(const std::string& moduleName, float deltaTime);
+    void UnloadScript(const std::string& moduleName);
 private:
     // コピー禁止
     ScriptManager(const ScriptManager&) = delete;
     ScriptManager& operator=(const ScriptManager&) = delete;
 
+    void RegisterCoreAPI(asIScriptEngine* engine);
+    void RegisterMathAPI(asIScriptEngine* engine);
+    void RegisterGameObjectAPI(asIScriptEngine* engine);
+    void RegisterPhysicsAPI(asIScriptEngine* engine);
+    void RegisterAudioAPI(asIScriptEngine* engine);
 };
 

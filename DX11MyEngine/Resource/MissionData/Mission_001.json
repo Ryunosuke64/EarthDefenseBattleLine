@@ -18,5 +18,11 @@
     {
         "StartPoint" : [0.0, 0.0, 0.0],
         "StartRotation" : [0.0, 0.0, 0.0]
+    },
+    
+    "Wave" : 
+    {
+        "WaveNum" : 3,
+        
     }
 }

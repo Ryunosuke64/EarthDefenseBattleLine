@@ -4,6 +4,7 @@
 #include <angelscript/add_on/scriptstdstring/scriptstdstring.h> // string型を使えるようにする
 #include <angelscript/add_on/scriptarray/scriptarray.h>         // arrayを使えるようにする
 #include <angelscript/add_on/scriptmath/scriptmath.h>           // 数学関数を使えるようにする
+#include <angelscript/add_on/scripthelper/scripthelper.h>       // 数学関数を使えるようにする
 
 using namespace Tool;
 
@@ -15,12 +16,6 @@ void MessageCallback(const asSMessageInfo* msg, void* param)
     else if (msg->type == asMSGTYPE_INFORMATION) type = "INFO";
 
     printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
-}
-
-// C++ から呼ばれる関数
-void print(const std::string& msg)
-{
-    MessageBoxA(NULL, msg.c_str(), "WORLD", MB_OK);
 }
 
 
@@ -77,14 +72,13 @@ bool ScriptManager::Init()
         RegisterScriptMath(m_pEngine);
     }
 
-
-    // グローバル関数 print() を登録
-    r = m_pEngine->RegisterGlobalFunction(
-        "void print(const string &in)", 
-        asFUNCTION(print), 
-        asCALL_CDECL
-    );
-    assert(r >= 0);
+    // =====================================
+    // AS内で使用するAPIの登録
+    // =====================================
+    {
+        // コアAPIの登録
+        RegisterCoreAPI(m_pEngine);
+    }
 
     // =====================================
     // スクリプト読み込み
@@ -112,7 +106,7 @@ bool ScriptManager::Init()
     r = builder.BuildModule();
     if (r < 0)
     {
-        ErrorMessage(L"コンパイル\n", L"ScriptManager");
+        ErrorMessage(L"コンパイルが出来ませんでした\n", L"ScriptManager");
         return false;
     }
 
@@ -143,6 +137,10 @@ bool ScriptManager::Init()
             ErrorMessage(StringToWstring(m_pContext->GetExceptionString()), L"ScriptManager");
         }
     }
+
+    // 登録済みAPIを出力
+    WriteConfigToFile(m_pEngine, "AngelScriptAPI.txt");
+
     return true;
 }
 
@@ -180,19 +178,20 @@ void ScriptManager::Term()
 //*【?】AngelScriptのスクリプトをロードする
 //*
 //* [引数] 
-//* _filePath : ファイルパス
+//* _moduleName : モジュール名
+//* _filePath   : ファイルパス
 //* 
 //* [返値] 
 //* なし
 //*----------------------------------------------------------------------------------------
-bool ScriptManager::LoadScript(const std::string& _filePath)
+bool ScriptManager::LoadScript(const std::string& _moduleName, const std::string& _filePath)
 {
     // =====================================
     // スクリプト読み込み
     // =====================================
     // スクリプトビルダーでモジュール作成
     CScriptBuilder builder;
-    int r = builder.StartNewModule(m_pEngine, "MyModule");
+    int r = builder.StartNewModule(m_pEngine, _moduleName.c_str());
     if (r < 0)
     {
         ErrorMessage(L"モジュール作成失敗\n", L"ScriptManager");
@@ -206,6 +205,121 @@ bool ScriptManager::LoadScript(const std::string& _filePath)
         return false;
     }
 
-
     return true;
+}
+
+
+//*---------------------------------------------------------------------------------------
+//*【?】
+//*
+//* [引数] 
+//* _moduleName : モジュール名
+//* 
+//* [返値] 
+//* なし
+//*----------------------------------------------------------------------------------------
+bool ScriptManager::StartScript(const std::string& _moduleName)
+{
+    return true;
+}
+//*---------------------------------------------------------------------------------------
+//*【?】
+//*
+//* [引数] 
+//* _moduleName : モジュール名
+//* deltaTime   : デルタタイム
+//* 
+//* [返値] 
+//* なし
+//*----------------------------------------------------------------------------------------
+bool ScriptManager::UpdateScript(const std::string& _moduleName, float deltaTime)
+{
+    return true;
+}
+
+//*---------------------------------------------------------------------------------------
+//*【?】
+//*
+//* [引数] 
+//* _moduleName : モジュール名
+//* 
+//* [返値] 
+//* なし
+//*----------------------------------------------------------------------------------------
+void ScriptManager::UnloadScript(const std::string& _moduleName)
+{
+
+}
+
+//*---------------------------------------------------------------------------------------
+//*【?】コアAPIの登録
+//*
+//* [引数] 
+//* *engine : ASエンジン
+//* 
+//* [返値] 
+//* なし
+//*----------------------------------------------------------------------------------------
+void ScriptManager::RegisterCoreAPI(asIScriptEngine* engine)
+{
+    int r = 0;
+
+    // ErrorMesageBox
+    engine->RegisterGlobalFunction(
+        "void ErrorMesageBox(const string &in  caption, const string &in msg)",
+        asFUNCTION(GIGA_Engine::ScriptAPI::Core::ErrorMesageBox),
+        asCALL_CDECL
+    );
+    assert(r >= 0);
+
+
+    // GetDeltaTime
+    engine->RegisterGlobalFunction(
+        "float GetDeltaTime()",
+        asFUNCTION(GIGA_Engine::ScriptAPI::Core::GetDeltaTime),
+        asCALL_CDECL
+    );
+    assert(r >= 0);
+}
+
+//*---------------------------------------------------------------------------------------
+//*【?】数学APIの登録
+//*
+//* [引数] 
+//* *engine : ASエンジン
+//* 
+//* [返値] 
+//* なし
+//*----------------------------------------------------------------------------------------
+void ScriptManager::RegisterMathAPI(asIScriptEngine* engine)
+{
+
+}
+
+//*---------------------------------------------------------------------------------------
+//*【?】ゲームオブジェクトAPIの登録
+//*
+//* [引数] 
+//* *engine : ASエンジン
+//* 
+//* [返値] 
+//* なし
+//*----------------------------------------------------------------------------------------
+void ScriptManager::RegisterGameObjectAPI(asIScriptEngine* engine)
+{
+
+}
+
+//*---------------------------------------------------------------------------------------
+//*【?】オーディオAPIの登録
+//*
+//* [引数] 
+//* *engine : ASエンジン
+//* 
+//* [返値] 
+//* なし
+//*----------------------------------------------------------------------------------------
+void ScriptManager::RegisterAudioAPI(asIScriptEngine* engine)
+{
+    
 }

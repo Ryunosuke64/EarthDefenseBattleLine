@@ -3,7 +3,7 @@ Total count
 RET        : 1
 CALLSYS    : 1
 SUSPEND    : 1
-PGA        : 1
+PGA        : 2
 
 Never executed
 PopPtr    
@@ -208,4 +208,5 @@ Sequences
 CALLSYS   , SUSPEND    : 1
 SUSPEND   , RET        : 1
 PGA       , CALLSYS    : 1
+PGA       , PGA        : 1
 LABEL     , PGA        : 1
