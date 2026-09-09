@@ -1,6 +1,6 @@
 {
   "level": 0,
-  "name": "TEST",
+  "name": "火炎放射器F28",
   "bulletMaxNum": 300,
   "bulletSimultaneousNum": 1,
   "fireRate": 60.0,
@@ -17,9 +17,9 @@
     "common" :  
     {
       "aliveFrame" : 60,
-      "speed": 100.0,
+      "speed": 60.0,
       "maxSpeed": 100.0,
-      "damage": 5.0,
+      "damage": 3.0,
       "acceleration": 0.0,
       "penetrationsCount": 0,
       "collisionSize": 0.0,

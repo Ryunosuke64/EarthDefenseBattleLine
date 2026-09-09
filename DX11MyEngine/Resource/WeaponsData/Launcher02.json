@@ -44,8 +44,8 @@
       "explosionEffectAliveTime" : 1.0,
       "isSmoke" : false,
 
-      "expLightColor" : [0.3, 0.3, 0.9],
-      "expLightIntensity" : 8.0,
+      "expLightColor" : [0.2, 0.2, 0.9],
+      "expLightIntensity" : 6.0,
       "expLightDuration" : 5.0
     },
 
@@ -57,7 +57,7 @@
       "trailWidth" : 1.5,
       "enableFlightSmoke" : true,
       "smokeInterval" : 0.001,
-      "smokeSize" : 3.0,
+      "smokeSize" : 1.0,
       "smokeEffectTag" : "Fragment_Plasma_01",
       "trailColor" : [1.0, 2.0, 2.0],
       "scale" : [0.2, 0.2, 0.2],

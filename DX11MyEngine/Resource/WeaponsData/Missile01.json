@@ -1,6 +1,6 @@
 {
   "level": 0,
-  "name": "ミサイル",
+  "name": "誘導ミサイル",
   "bulletMaxNum": 30,
   "bulletSimultaneousNum": 1,
   "fireRate": 10,

@@ -21,6 +21,7 @@
 #include "TweenManager.h"
 #include "BuildingManager.h"
 #include "ScriptManager.h"
+#include "EnemyManager.h"
 
 // ***************************************************************************************
 // ---------------------------------------------------------------------------------------
@@ -61,4 +62,5 @@ public:
 	static ItemManager			* m_pItemManager;		// アイテム管理
 	static BuildingManager		* m_pBuildingManager;	// 建物管理
 	static ScriptManager		* m_pScriptManager;		// AngelScript管理
+	static EnemyManager			* m_pEnemyManager;		// エネミー管理
 };

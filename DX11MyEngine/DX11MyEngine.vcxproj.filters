@@ -903,6 +903,9 @@
     <ClCompile Include="Source\Cpp\AS_AudioAPI.cpp">
       <Filter>ソース ファイル\Scripts\RegisterAPI\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Cpp\EnemyManager.cpp">
+      <Filter>ソース ファイル\Singleton\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Header\SHADER.h">
@@ -1444,6 +1447,9 @@
     </ClInclude>
     <ClInclude Include="Source\Header\AS_AudioAPI.h">
       <Filter>ソース ファイル\Scripts\RegisterAPI\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\EnemyManager.h">
+      <Filter>ソース ファイル\Singleton\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

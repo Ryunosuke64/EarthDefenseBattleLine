@@ -41,6 +41,7 @@ ItemManager             *Master::m_pItemManager         = nullptr;   // アイテム
 TweenManager            *Master::m_pTweenManager        = nullptr;   // Tween管理
 BuildingManager         *Master::m_pBuildingManager     = nullptr;   // 建物管理
 ScriptManager           *Master::m_pScriptManager       = nullptr;   // AngelScript管理
+EnemyManager            *Master::m_pEnemyManager        = nullptr;   // エネミー管理
 
 //*---------------------------------------------------------------------------------------
 //* @:DXApp Class 
@@ -116,6 +117,7 @@ bool DXApp::Init(HINSTANCE hInstance,LPSTR lpCmdLine, int nCmdShow)
     Master::m_pTweenManager         = new TweenManager();           // Tween管理
     Master::m_pBuildingManager      = new BuildingManager();        // 建物管理
     Master::m_pScriptManager        = new ScriptManager();          // AngelScript管理
+    Master::m_pEnemyManager         = new EnemyManager();           // エネミー管理
 
 
     // *************************************************************************************************
