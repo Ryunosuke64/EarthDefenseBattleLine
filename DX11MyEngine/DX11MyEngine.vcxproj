@@ -276,6 +276,7 @@
     <ClInclude Include="Source\Header\EditorManager.h" />
     <ClInclude Include="Source\Header\EditWindowBase.h" />
     <ClInclude Include="Source\Header\EffectManager.h" />
+    <ClInclude Include="Source\Header\EnemyFactory.h" />
     <ClInclude Include="Source\Header\EnemyManager.h" />
     <ClInclude Include="Source\Header\EnemyStateFactory.h" />
     <ClInclude Include="Source\Header\EventCondition.h" />
@@ -500,6 +501,7 @@
     <ClCompile Include="Source\Cpp\EditorManager.cpp" />
     <ClCompile Include="Source\Cpp\EditWindowBase.cpp" />
     <ClCompile Include="Source\Cpp\EffectManager.cpp" />
+    <ClCompile Include="Source\Cpp\EnemyFactory.cpp" />
     <ClCompile Include="Source\Cpp\EnemyManager.cpp" />
     <ClCompile Include="Source\Cpp\EnemyStateFactory.cpp" />
     <ClCompile Include="Source\Cpp\EventCondition.cpp" />

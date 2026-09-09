@@ -1,16 +1,18 @@
 
 Total count
+PshV4      : 1
+PSF        : 4
 RET        : 1
-CALLSYS    : 1
-SUSPEND    : 1
-PGA        : 2
+CALLSYS    : 5
+SUSPEND    : 3
+CpyVtoV4   : 1
+CpyRtoV4   : 1
+PGA        : 1
 
 Never executed
 PopPtr    
 PshGPtr   
 PshC4     
-PshV4     
-PSF       
 SwapPtr   
 NOT       
 PshG4     
@@ -83,12 +85,10 @@ TYPEID
 SetV4     
 SetV8     
 ADDSi     
-CpyVtoV4  
 CpyVtoV8  
 CpyVtoR4  
 CpyVtoR8  
 CpyVtoG4  
-CpyRtoV4  
 CpyRtoV8  
 CpyGtoV4  
 WRTV1     
@@ -205,8 +205,16 @@ POWu64
 Thiscall1 
 
 Sequences
-CALLSYS   , SUSPEND    : 1
-SUSPEND   , RET        : 1
+PshV4     , PSF        : 1
+PSF       , CALLSYS    : 3
+PSF       , PGA        : 1
+CALLSYS   , PSF        : 1
+CALLSYS   , RET        : 1
+CALLSYS   , SUSPEND    : 2
+CALLSYS   , CpyRtoV4   : 1
+SUSPEND   , PshV4      : 1
+SUSPEND   , PSF        : 2
+CpyVtoV4  , SUSPEND    : 1
+CpyRtoV4  , CpyVtoV4   : 1
 PGA       , CALLSYS    : 1
-PGA       , PGA        : 1
-LABEL     , PGA        : 1
+LABEL     , CALLSYS    : 1

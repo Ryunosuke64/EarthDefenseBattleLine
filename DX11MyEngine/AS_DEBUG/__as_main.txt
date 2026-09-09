@@ -1,15 +1,36 @@
 void as_main()
 
-Temps: 
+Temps: 2
 
 Variables: 
+ 001: float deltaTime
+ 012: string deltaTimeStr
+ 002: int 
 
 
 - 4,5 -
-    0   0 *    PGA      0xe1152610          (str:aaa)
-    3   2 *    PGA      0xe1151690          (str:わわわ)
-    6   4 *    CALLSYS  2, 136           (void ErrorMesageBox(const string&in, const string&in))
-- 5,2 -
-    8   0 *    SUSPEND
+               VarDecl  0
+    0  12 *    CALLSYS  0, 137           (float GetDeltaTime())
+    2  12 *    CpyRtoV4 v2
+    3  12 *    CpyVtoV4 v1, v2
+- 5,5 -
+    5  12 *    SUSPEND
+               VarDecl  1
+    6  12 *    PshV4    v1
+    7  13 *    PSF      v12
+    8  15 *    CALLSYS  0, 61           (string::string())
+               ObjInfo  v12, 1
+   10  13 *    PSF      v12
+   11  15 *    CALLSYS  1, 78           (string& string::opAssign(float))
+- 6,5 -
+   13  12 *    SUSPEND
+   14  12 *    PSF      v12
+   15  14 *    PGA      0xd22e6790          (str:デルタタイム)
+   18  16 *    CALLSYS  2, 136           (void ErrorMesageBox(const string&in, const string&in))
+- 7,2 -
+   20  12 *    SUSPEND
+   21  12 *    PSF      v12
+   22  14 *    CALLSYS  0, 63           (string::~string())
+               ObjInfo  v12, 0
             0:
-    9   0 *    RET      0
+   24  12 *    RET      0

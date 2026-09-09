@@ -9,6 +9,7 @@
 #include "GameManager.h"
 #include "RendererEngine.h"
 #include "ResourceManager.h"
+#include "MeshFactory.h"
 #include "../../resource.h"   
 
 #include <string>
@@ -213,6 +214,8 @@ bool DXApp::Init(HINSTANCE hInstance,LPSTR lpCmdLine, int nCmdShow)
         assert(false);
         return false;
     }
+
+
 
     // *************************************************************************************************
     /**  サウンドマネージャの初期化 **/

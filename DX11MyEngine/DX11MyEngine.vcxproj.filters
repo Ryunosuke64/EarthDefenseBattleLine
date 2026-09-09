@@ -340,6 +340,9 @@
     <Filter Include="ソース ファイル\Scripts\RegisterAPI\Math">
       <UniqueIdentifier>{0a058e16-537c-48c3-a6e1-08eee4c287d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\Factory">
+      <UniqueIdentifier>{b57521f4-59f8-458b-9749-8459b9a795dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Cpp\SHADER.cpp">
@@ -906,6 +909,9 @@
     <ClCompile Include="Source\Cpp\EnemyManager.cpp">
       <Filter>ソース ファイル\Singleton\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Cpp\EnemyFactory.cpp">
+      <Filter>ソース ファイル\Game\Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Header\SHADER.h">
@@ -1450,6 +1456,9 @@
     </ClInclude>
     <ClInclude Include="Source\Header\EnemyManager.h">
       <Filter>ソース ファイル\Singleton\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\EnemyFactory.h">
+      <Filter>ソース ファイル\Game\Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

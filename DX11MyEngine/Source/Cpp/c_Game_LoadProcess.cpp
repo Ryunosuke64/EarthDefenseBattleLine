@@ -36,6 +36,7 @@
 #include "Component_Item.h"
 #include "Component_DistortionEffect.h"
 #include "Component_Physics.h"
+#include "EnemyFactory.h"
 
 using namespace UtilityData;
 using namespace EnemyData;
@@ -103,118 +104,28 @@ void c_Game_LoadProcess::OnExit(SceneManager* pOwner)
 
     /* アリ モデルの生成 */
     {
-        // マテリアル取得
-        auto matPtr = Master::m_pResourceManager->FindMaterial("Ant");
-
-        SetupMaterialInfo matInfo[1];
-        matInfo[0].Index = 0;
-        matInfo[0].pMaterialData = matPtr;
-
-        CreateModelInfo model;
-        model.pRenderer = m_pRenderer;
-        model.ObjTag = "Ant1";
-        model.IsAnim = true;
-        model.MatNum = 1;
-        model.SetupMaterial = matInfo;
-        model.ShaderType = SHADER_TYPE::DEFERRED_STD_SKINNED_N;
-        model.LODModels[0] = {"Resource/Model/Enemy/GiantAnt01/GiantAnt_LOD0.fbx", 0.0f };
-        model.LODModels[1] = {"Resource/Model/Enemy/GiantAnt01/GiantAnt_LOD1.fbx", 100.0f};
-        model.LODModels[2] = {"Resource/Model/Enemy/GiantAnt01/GiantAnt_LOD2.fbx", 150.0f};
-
-        for (int i = 0; i < ENEMY_ANT_NUM; i++)
-        {
-            model.ObjTag = "Ant"/* + std::to_string(i + 1)*/;   // タグ
-
-            auto obj = MeshFactory::CreateModel(model);
-            auto transform = obj->get_Component<MyTransform>();
-
-            // 動的オブジェクト
-            obj->set_IsStatic(false);
-
-            // ポーズ中は停止
-            obj->set_IsUpdateAllowedDuringPause(false);
-
-            obj->get_Component<SkinnedMeshAnimator>()->set_IsAnim(true);
-            obj->get_Component<SkinnedMeshAnimator>()->set_AnimIndex(0);
-
-            //
-            // エネミーコントローラー追加
-            //
-            auto enemyController = obj->add_Component<EnemyController>();
-
-            //
-            // 移動コンポーネントの追加
-            //
-            obj->add_Component<MoveLogic>();
-            
-            //
-            // 派閥コンポーネント追加
-            //
-            auto faction = obj->add_Component<Faction>();
-            faction->set_Faction(FACTION::ENEMY);
-            
-            //
-            // 体力コンポーネント追加
-            //
-            auto health = obj->add_Component<Health>();
-            float hp = ENEMY_ANT01_BASE_HP * Master::m_pDataManager->get_EnemyDifficultyFactor()._hpRate;
-            health->set_MaxHP(hp);
-            health->set_CrntHP(hp);
-
-            VEC3 pos = VEC3();
-            pos.x = Tool::RandRange(-50.0, 50.0);
-            pos.y = 0.0f;
-            pos.z = Tool::RandRange(-50.0, 50.0);
-
-            VEC3 rot = VEC3();
-            rot.y = Tool::RandRange(-360.0f, 360.0f);
-
-            transform->set_Pos(pos);
-            transform->set_RotateToDeg(rot);
-            transform->set_Scale(1);
-
-            //
-            // 物理コンポーネント追加
-            //
-            auto physics = obj->add_Component<Physics>();
-            physics->set_AirDrag(1.0f);
-            physics->set_Restitution(0.5f); // 跳ねない
-            physics->set_AngularDrag(0.98f);
-
-            //
-            // コライダーの追加
-            //
-            auto collider = obj->add_Component<BoxCollider>();
-            collider->set_Size(VEC3(2.0f, 2.0f, 2.0f));
-            collider->set_Center(VEC3(0.0f, 2.0f, 0.0f));
-            // 衝突カテゴリ
-            collider->set_CollisionCategory(COLLISION_CATEGORY::ENEMY);
-
-            // 衝突マスクの設定
-            collider->set_CollisionResponse(COLLISION_CATEGORY::BUILDING, COLLISION_RESPONSE::RESPONSE_BLOCK);              // 建物
-            collider->set_CollisionResponse(COLLISION_CATEGORY::DESTRUCTION_BUILDING, COLLISION_RESPONSE::RESPONSE_BLOCK);  // 破壊可能建物
-            collider->set_CollisionResponse(COLLISION_CATEGORY::ENEMY, COLLISION_RESPONSE::RESPONSE_IGNORE);                // エネミー
-            collider->set_CollisionResponse(COLLISION_CATEGORY::ENEMY_BULLET, COLLISION_RESPONSE::RESPONSE_IGNORE);         // エネミー弾
-            collider->set_CollisionResponse(COLLISION_CATEGORY::ITEM, COLLISION_RESPONSE::RESPONSE_IGNORE);                 // アイテム
-            collider->set_CollisionResponse(COLLISION_CATEGORY::PLAYER_BULLET, COLLISION_RESPONSE::RESPONSE_OVERLAP);       // アイテム
-
-
-            // コライダーの登録
-            Master::m_pCollisionManager->RegisterCollider(collider);
-            
-            
-            //
-            // ステートの登録
-            //
-            enemyController->Start(*m_pRenderer);
-            StateMachine<EnemyController> stateMachine_Ant(enemyController.get());
-            EnemyStateFactory::Create(stateMachine_Ant, (int)ENEMY_TYPE::GIANT_ANT_Normal, *m_pRenderer);
-            stateMachine_Ant.SetStartState(ANT_STATE::ANT_STATE_PATROL_IDLE);
-            // 登録
-            enemyController->RegisterStateMachine(stateMachine_Ant);
-
-        }
+        EnemyData::EnemyGroupSpawnData spawnData;
+        spawnData.enemyType = ENEMY_TYPE::GIANT_ANT_Normal;
+        spawnData.isAggro = true;
+        spawnData.position = VEC3(-150.0f, 0.0f, 0.0f);
+        spawnData.rotation = VEC3();
+        spawnData.hp = 200.0f;
+        spawnData.count = 500;
+        spawnData.spawnRadius = 10.0f;
+        EnemyFactory::SpawnEnemyGroup(spawnData);
     }
+
+    /* 八面体生成 */
+    {
+        EnemyData::EnemySpawnData spawnData;
+        spawnData.enemyType = ENEMY_TYPE::OCTAHEDRON;
+        spawnData.isAggro = true;
+        spawnData.position = VEC3(0.0f, 200.0f, 0.0f);
+        spawnData.rotation = VEC3();
+        spawnData.hp = 1000.0f;
+        EnemyFactory::SpawnEnemy(spawnData);
+    }
+
 
     /* B-2 モデルの生成 */
     {
@@ -416,107 +327,6 @@ void c_Game_LoadProcess::OnExit(SceneManager* pOwner)
         obj->get_Component<MyTransform>()->set_Scale(0.1f, 0.1f, 0.1f);
         obj->get_Component<MyTransform>()->set_Pos(0.0f, 500.0f, 0.0f);
         obj->get_Component<MyTransform>()->set_RotateToDeg(0.0f, 0.0f, 0.0f);
-    }
-
-    /* 八面体生成 */
-    {
-        // マテリアル取得
-        auto matPtr1 = Master::m_pResourceManager->FindMaterial("Objector_body");
-        auto matPtr2 = Master::m_pResourceManager->FindMaterial("Objector_shield");
-
-        SetupMaterialInfo matInfo[2];
-        matInfo[0].Index = 0;
-        matInfo[0].pMaterialData = matPtr1;
-        matInfo[1].Index = 1;
-        matInfo[1].pMaterialData = matPtr2;
-
-        CreateModelInfo model;
-        model.pRenderer = m_pRenderer;
-        model.LODModels[0] = { "Resource/Model/Enemy/Octahedron/Octahedron.fbx", 0.0f };
-        model.ObjTag = "Octahedron";
-        model.IsAnim = false;
-        model.MatNum = 2;
-        model.IsActive = true;
-        model.SetupMaterial = matInfo;
-        model.ShaderType = SHADER_TYPE::DEFERRED_STD_STATIC_N;
-
-        for (int i = 0; i < ENEMY_OCT_NUM; i++)
-        {
-            auto obj = MeshFactory::CreateModel(model);
-            obj->set_IsStatic(false);
-            obj->get_Component<MyTransform>()->set_Scale(1.0f, 1.0f, 1.0f);
-            obj->get_Component<MyTransform>()->set_Pos(-200.0f, 200.0f, 100);
-            obj->get_Component<MyTransform>()->set_RotateToDeg(0.0f, 0.0f, 0.0f);
-
-            // 動的オブジェクト
-            obj->set_IsStatic(false);
-
-            // ポーズ中は停止
-            obj->set_IsUpdateAllowedDuringPause(false);
-
-            //
-            // エネミーコントローラー追加
-            //
-            auto enemyController = obj->add_Component<EnemyController>();
-
-            //
-            // 移動コンポーネントの追加
-            //
-            obj->add_Component<MoveLogic>();
-
-            //
-            // 派閥コンポーネント追加
-            //
-            auto faction = obj->add_Component<Faction>();
-            faction->set_Faction(FACTION::ENEMY);
-
-            //
-            // 体力コンポーネント追加
-            //
-            auto health = obj->add_Component<Health>();
-            float hp = ENEMY_OCTAHEDRON_BASE_HP * Master::m_pDataManager->get_EnemyDifficultyFactor()._hpRate;
-            health->set_MaxHP(hp);
-            health->set_CrntHP(hp);
-
-            //
-            // 物理コンポーネント追加
-            //
-            auto physics = obj->add_Component<Physics>();
-            physics->set_AirDrag(1.0f);
-            physics->set_Restitution(0.0f);     // 跳ねない
-            physics->set_GravityScale(0.0f);    // 無重力
-            physics->set_Mass(1000.0f);
-            physics->set_MoveDrag(1.0f);
-
-            //
-            // コライダーの追加
-            //
-            auto collider = obj->add_Component<BoxCollider>();
-            collider->set_Size(VEC3(20.0f, 20.0f, 20.0f));
-            collider->set_Center(VEC3(0.0f, 10.0f, 0.0f));
-            // 衝突カテゴリ
-            collider->set_CollisionCategory(COLLISION_CATEGORY::ENEMY);
-
-            // 衝突マスクの設定
-            collider->set_CollisionResponse(COLLISION_CATEGORY::BUILDING, COLLISION_RESPONSE::RESPONSE_BLOCK);              // 建物
-            collider->set_CollisionResponse(COLLISION_CATEGORY::DESTRUCTION_BUILDING, COLLISION_RESPONSE::RESPONSE_BLOCK);  // 破壊可能建物
-            collider->set_CollisionResponse(COLLISION_CATEGORY::ENEMY, COLLISION_RESPONSE::RESPONSE_IGNORE);                // エネミー
-            collider->set_CollisionResponse(COLLISION_CATEGORY::ENEMY_BULLET, COLLISION_RESPONSE::RESPONSE_IGNORE);         // エネミー弾
-            collider->set_CollisionResponse(COLLISION_CATEGORY::ITEM, COLLISION_RESPONSE::RESPONSE_IGNORE);                 // アイテム
-
-            // コライダーの登録
-            Master::m_pCollisionManager->RegisterCollider(collider);
-
-            //
-            // ステートの登録
-            //
-            enemyController->Start(*m_pRenderer);
-            StateMachine<EnemyController> stateMachine_Octahedron(enemyController.get());
-            EnemyStateFactory::Create(stateMachine_Octahedron, (int)ENEMY_TYPE::OCTAHEDRON, *m_pRenderer);
-            stateMachine_Octahedron.SetStartState(OCTAHEDRON_STATE::OCTAHEDRON_STATE_ACTIVE_IDLE);
-            // 登録
-            enemyController->RegisterStateMachine(stateMachine_Octahedron);
-        }
     }
 
     /* 地面の生成 */

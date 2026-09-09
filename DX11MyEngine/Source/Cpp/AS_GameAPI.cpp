@@ -7,5 +7,5 @@
 float GIGA_Engine::ScriptAPI::Game::
 GetMissionTime()
 {
-
+	return 0.0f;
 }

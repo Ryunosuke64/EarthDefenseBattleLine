@@ -8,7 +8,6 @@ namespace EnemyData
 	enum class ENEMY_TYPE
 	{
 		GIANT_ANT_Normal,	// アリ
-
 		OCTAHEDRON,			// 八面体
 
 		NUM,
@@ -73,6 +72,29 @@ namespace EnemyData
 		"ACTIVE_FALLING",
 		"ACTIVE_HIT_STUN",
 		"ACTIVE_DEAD",
+	};
+
+	
+	// エネミー出現時のセットアップデータ
+	struct EnemySpawnData
+	{
+	    EnemyData::ENEMY_TYPE enemyType;    // エネミーの種類
+	    VECTOR3::VEC3 position;     // 位置
+	    VECTOR3::VEC3 rotation;     // 回転
+		float hp = 0.0f;			// HP
+		bool isAggro = false;       // 攻撃状態か
+	};	
+
+	// エネミーグループ出現時のセットアップデータ
+	struct EnemyGroupSpawnData
+	{
+		EnemyData::ENEMY_TYPE enemyType;    // エネミーの種類
+		VECTOR3::VEC3 position;             // 位置
+		VECTOR3::VEC3 rotation;             // 回転
+		float hp = 0.0f;					// HP
+		float spawnRadius = 0.0f;           // 出現範囲
+		int count = 0;                      // 出現数
+		bool isAggro = 0.0f;                // 攻撃状態か
 	};
 
 	const float ENEMY_ANT01_BASE_HP = 200.0f;	// アリの基本HP

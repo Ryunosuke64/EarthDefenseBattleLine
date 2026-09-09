@@ -100,6 +100,10 @@ public:
 	void set_SkyRenderer(std::shared_ptr<class SkyRenderer> _pSkyRenderer) { m_pSkyRenderer = _pSkyRenderer; }	// スカイレンダラーの設定
 	std::weak_ptr<class SkyRenderer> get_SkyRenderer() { return m_pSkyRenderer; }	// スカイレンダラーの取得
 
+
+
+	RendererEngine* get_RendererEngine()const { return m_pRenderer; }	// レンダラーエンジンの取得
+
 private:
 	// コピー禁止
 	DataManager(const DataManager&) = delete;
