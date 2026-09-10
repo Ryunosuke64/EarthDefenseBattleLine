@@ -1,6 +1,9 @@
 #pragma once
 #include <angelscript.h>
 #include "AS_CoreAPI.h"
+#include "AS_GameAPI.h"
+#include "AS_AudioAPI.h"
+#include "AS_MathAPI.h"
 
 // ***************************************************************************************
 // ---------------------------------------------------------------------------------------

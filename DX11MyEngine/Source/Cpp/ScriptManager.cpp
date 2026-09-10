@@ -7,6 +7,7 @@
 #include <angelscript/add_on/scripthelper/scripthelper.h>       // 数学関数を使えるようにする
 
 using namespace Tool;
+using namespace VECTOR3;
 
 // メッセージコールバック
 void MessageCallback(const asSMessageInfo* msg, void* param)
@@ -76,8 +77,11 @@ bool ScriptManager::Init()
     // AS内で使用するAPIの登録
     // =====================================
     {
-        // コアAPIの登録
+        // コアAPI
         RegisterCoreAPI(m_pEngine);
+
+        // ゲームAPI
+        RegisterGameObjectAPI(m_pEngine);
     }
 
     // =====================================
@@ -264,8 +268,10 @@ void ScriptManager::RegisterCoreAPI(asIScriptEngine* engine)
 {
     int r = 0;
 
+    // =====================================
     // ErrorMesageBox
-    engine->RegisterGlobalFunction(
+    // =====================================
+    r = engine->RegisterGlobalFunction(
         "void ErrorMesageBox(const string &in  caption, const string &in msg)",
         asFUNCTION(GIGA_Engine::ScriptAPI::Core::ErrorMesageBox),
         asCALL_CDECL
@@ -273,8 +279,10 @@ void ScriptManager::RegisterCoreAPI(asIScriptEngine* engine)
     assert(r >= 0);
 
 
+    // =====================================
     // GetDeltaTime
-    engine->RegisterGlobalFunction(
+    // =====================================
+    r = engine->RegisterGlobalFunction(
         "float GetDeltaTime()",
         asFUNCTION(GIGA_Engine::ScriptAPI::Core::GetDeltaTime),
         asCALL_CDECL
@@ -293,6 +301,26 @@ void ScriptManager::RegisterCoreAPI(asIScriptEngine* engine)
 //*----------------------------------------------------------------------------------------
 void ScriptManager::RegisterMathAPI(asIScriptEngine* engine)
 {
+    engine->RegisterObjectType(
+        "VEC3",
+        sizeof(VEC3),
+        asOBJ_VALUE |
+        asGetTypeTraits<VEC3>() |
+        asOBJ_APP_CLASS_MORE_CONSTRUCTORS |
+        asOBJ_APP_CLASS_ALLFLOATS
+    );
+
+    engine->RegisterObjectProperty(
+        "VEC3", "float x",
+        asOFFSET(VEC3, x));
+
+    engine->RegisterObjectProperty(
+        "VEC3", "float y",
+        asOFFSET(VEC3, y));
+
+    engine->RegisterObjectProperty(
+        "VEC3", "float z",
+        asOFFSET(VEC3, z));
 
 }
 
@@ -307,7 +335,48 @@ void ScriptManager::RegisterMathAPI(asIScriptEngine* engine)
 //*----------------------------------------------------------------------------------------
 void ScriptManager::RegisterGameObjectAPI(asIScriptEngine* engine)
 {
+    int r = 0;
 
+    // =====================================
+    // ENEMY_TYP
+    // =====================================
+    r = engine->RegisterEnum("ENEMY_TYPE");
+    assert(r >= 0);
+
+    r = engine->RegisterEnumValue(
+        "ENEMY_TYPE",
+        "ANT",
+        static_cast<int>(EnemyData::ENEMY_TYPE::GIANT_ANT_Normal));
+    assert(r >= 0);
+
+    r = engine->RegisterEnumValue(
+        "ENEMY_TYPE",
+        "SPIDER",
+        static_cast<int>(EnemyData::ENEMY_TYPE::OCTAHEDRON));
+    assert(r >= 0);
+
+
+
+    // =====================================
+    // SpawnEnemy
+    // =====================================
+    r = engine->RegisterGlobalFunction(
+        "uint32 SpawnEnemy(ENEMY_TYPE type,const VEC3&in pos, const VEC3&in rot, float hp, bool isAgro)",
+        asFUNCTION(GIGA_Engine::ScriptAPI::Game::SpawnEnemy),
+        asCALL_CDECL
+    );
+    assert(r >= 0);  
+    
+
+    // =====================================
+    // SpawnEnemyGroup
+    // =====================================
+    r = engine->RegisterGlobalFunction(
+        "uint32 SpawnEnemyGroup(ENEMY_TYPE type, const VEC3&in pos, float spawnRadius, u_int count, float hp, bool isAgro)",
+        asFUNCTION(GIGA_Engine::ScriptAPI::Game::SpawnEnemyGroup),
+        asCALL_CDECL
+    );
+    assert(r >= 0);
 }
 
 //*---------------------------------------------------------------------------------------
