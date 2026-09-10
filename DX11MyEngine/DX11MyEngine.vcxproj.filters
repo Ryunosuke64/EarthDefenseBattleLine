@@ -1496,6 +1496,7 @@
     <None Include="Resource\MISSION_AS\test.as">
       <Filter>ソース ファイル\Game\AS</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\Skinned_VS.hlsl">

@@ -1,18 +1,18 @@
 
 Total count
-PshV4      : 1
-PSF        : 4
+PshC4      : 20
+PshV4      : 3
+PSF        : 8
 RET        : 1
-CALLSYS    : 5
+CALLSYS    : 11
 SUSPEND    : 3
-CpyVtoV4   : 1
-CpyRtoV4   : 1
-PGA        : 1
+GETREF     : 4
+VAR        : 4
+SetV1      : 3
 
 Never executed
 PopPtr    
 PshGPtr   
-PshC4     
 SwapPtr   
 NOT       
 PshG4     
@@ -77,7 +77,6 @@ GETOBJ
 REFCPY    
 CHKREF    
 GETOBJREF 
-GETREF    
 PshNull   
 ClrVPtr   
 OBJTYPE   
@@ -85,10 +84,12 @@ TYPEID
 SetV4     
 SetV8     
 ADDSi     
+CpyVtoV4  
 CpyVtoV8  
 CpyVtoR4  
 CpyVtoR8  
 CpyVtoG4  
+CpyRtoV4  
 CpyRtoV8  
 CpyGtoV4  
 WRTV1     
@@ -101,8 +102,8 @@ RDR4
 RDR8      
 LDG       
 LDV       
+PGA       
 CmpPtr    
-VAR       
 iTOf      
 fTOi      
 uTOf      
@@ -144,7 +145,6 @@ ChkNullV
 CALLINTF  
 iTOb      
 iTOw      
-SetV1     
 SetV2     
 Cast      
 i64TOi    
@@ -205,16 +205,18 @@ POWu64
 Thiscall1 
 
 Sequences
-PshV4     , PSF        : 1
-PSF       , CALLSYS    : 3
-PSF       , PGA        : 1
-CALLSYS   , PSF        : 1
-CALLSYS   , RET        : 1
-CALLSYS   , SUSPEND    : 2
-CALLSYS   , CpyRtoV4   : 1
-SUSPEND   , PshV4      : 1
-SUSPEND   , PSF        : 2
-CpyVtoV4  , SUSPEND    : 1
-CpyRtoV4  , CpyVtoV4   : 1
-PGA       , CALLSYS    : 1
-LABEL     , CALLSYS    : 1
+PshC4     , PshC4      : 13
+PshC4     , PSF        : 4
+PshC4     , GETREF     : 3
+PshV4     , PshC4      : 3
+PSF       , CALLSYS    : 8
+CALLSYS   , PSF        : 4
+CALLSYS   , SUSPEND    : 3
+CALLSYS   , VAR        : 4
+SUSPEND   , RET        : 1
+SUSPEND   , SetV1      : 2
+GETREF    , CALLSYS    : 3
+GETREF    , GETREF     : 1
+VAR       , PshC4      : 4
+SetV1     , PshV4      : 3
+LABEL     , SetV1      : 1

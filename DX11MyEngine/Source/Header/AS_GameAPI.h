@@ -12,11 +12,11 @@ namespace GIGA_Engine::ScriptAPI::Game
 
 	// エネミーの出現（単体）
 	// タイプ・位置・回転・HP・攻撃状態か
-	uint32_t SpawnEnemy(EnemyData::ENEMY_TYPE type,const VECTOR3::VEC3& pos, const VECTOR3::VEC3& rot, float hp, bool isAgro);
+	uint32_t SpawnEnemy(EnemyData::ENEMY_TYPE type,const VECTOR3::VEC3& pos, const VECTOR3::VEC3& rot, float hp, bool isAggro);
 
 	// エネミーグループ出現
 	// タイプ・位置・出現範囲・出現数・HP・攻撃状態か
-	uint32_t SpawnEnemyGroup(EnemyData::ENEMY_TYPE type, const VECTOR3::VEC3& pos, float spawnRadius, u_int count, float hp, bool isAgro);
+	uint32_t SpawnEnemyGroup(EnemyData::ENEMY_TYPE type, const VECTOR3::VEC3& pos, float spawnRadius, u_int count, float hp, bool isAggro);
 
 	// 指定IDのエネミーが倒されたか
 	bool IsEnemyDead(uint32_t enemyID);

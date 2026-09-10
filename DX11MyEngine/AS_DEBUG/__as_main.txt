@@ -1,36 +1,87 @@
 void as_main()
 
-Temps: 2
+Temps: 3, 4, 5, 6, 7, 8, 9, 10, 11, 14
 
 Variables: 
- 001: float deltaTime
- 012: string deltaTimeStr
- 002: int 
+ 003: VEC3 
+ 004: int 
+ 005: int 
+ 006: int 
+ 007: int 
+ 008: int 
+ 009: int 
+ 010: int 
+ 011: int 
+ 014: VEC3 
 
 
 - 4,5 -
-               VarDecl  0
-    0  12 *    CALLSYS  0, 137           (float GetDeltaTime())
-    2  12 *    CpyRtoV4 v2
-    3  12 *    CpyVtoV4 v1, v2
-- 5,5 -
-    5  12 *    SUSPEND
-               VarDecl  1
-    6  12 *    PshV4    v1
-    7  13 *    PSF      v12
-    8  15 *    CALLSYS  0, 61           (string::string())
-               ObjInfo  v12, 1
-   10  13 *    PSF      v12
-   11  15 *    CALLSYS  1, 78           (string& string::opAssign(float))
-- 6,5 -
-   13  12 *    SUSPEND
-   14  12 *    PSF      v12
-   15  14 *    PGA      0xfa31a0a0          (str:デルタタイム)
-   18  16 *    CALLSYS  2, 136           (void ErrorMesageBox(const string&in, const string&in))
-- 7,2 -
-   20  12 *    SUSPEND
-   21  12 *    PSF      v12
-   22  14 *    CALLSYS  0, 63           (string::~string())
-               ObjInfo  v12, 0
+    0  14 *    SetV1    v7, 0x1
+    2  14 *    PshV4    v7
+    3  15 *    PshC4    0x43480000          (i:1128792064, f:200)
+    5  16 *    PshC4    0x14          (i:20, f:2.8026e-44)
+    7  17 *    PshC4    0x42480000          (i:1112014848, f:50)
+    9  18 *    PshC4    0x0          (i:0, f:0)
+   11  19 *    PshC4    0x0          (i:0, f:0)
+   13  20 *    PshC4    0x0          (i:0, f:0)
+   15  21 *    PSF      v3
+   16  23 *    CALLSYS  3, 143           (VEC3::VEC3(float, float, float))
+               ObjInfo  v3, 1
+   18  18 *    VAR      v3
+   19  20 *    PshC4    0x0          (i:0, f:0)
+   21  21 *    GETREF   1
+   22  21 *    CALLSYS  6, 145           (uint SpawnEnemyGroup(ENEMY_TYPE, const VEC3&in, float, uint, float, bool))
+   24  14 *    PSF      v3
+   25  16 *    CALLSYS  0, 139           (VEC3::~VEC3())
+- 13,5 -
+               ObjInfo  v3, 0
+   27  14 *    SUSPEND
+   28  14 *    SetV1    v10, 0x1
+   30  14 *    PshV4    v10
+   31  15 *    PshC4    0x43480000          (i:1128792064, f:200)
+   33  16 *    PshC4    0x1e          (i:30, f:4.2039e-44)
+   35  17 *    PshC4    0x42480000          (i:1112014848, f:50)
+   37  18 *    PshC4    0x42c80000          (i:1120403456, f:100)
+   39  19 *    PshC4    0x0          (i:0, f:0)
+   41  20 *    PshC4    0xc2c80000          (i:-1027080192, f:-100)
+   43  21 *    PSF      v3
+   44  23 *    CALLSYS  3, 143           (VEC3::VEC3(float, float, float))
+               ObjInfo  v3, 1
+   46  18 *    VAR      v3
+   47  20 *    PshC4    0x0          (i:0, f:0)
+   49  21 *    GETREF   1
+   50  21 *    CALLSYS  6, 145           (uint SpawnEnemyGroup(ENEMY_TYPE, const VEC3&in, float, uint, float, bool))
+   52  14 *    PSF      v3
+   53  16 *    CALLSYS  0, 139           (VEC3::~VEC3())
+- 22,5 -
+               ObjInfo  v3, 0
+   55  14 *    SUSPEND
+   56  14 *    SetV1    v9, 0x1
+   58  14 *    PshV4    v9
+   59  15 *    PshC4    0x44160000          (i:1142292480, f:600)
+   61  16 *    PshC4    0x0          (i:0, f:0)
+   63  17 *    PSF      v3
+   64  19 *    CALLSYS  1, 142           (VEC3::VEC3(float))
+               ObjInfo  v3, 1
+   66  16 *    VAR      v3
+   67  18 *    PshC4    0x0          (i:0, f:0)
+   69  19 *    PshC4    0x43160000          (i:1125515264, f:150)
+   71  20 *    PshC4    0x0          (i:0, f:0)
+   73  21 *    PSF      v14
+   74  23 *    CALLSYS  3, 143           (VEC3::VEC3(float, float, float))
+               ObjInfo  v14, 1
+   76  18 *    VAR      v14
+   77  20 *    PshC4    0x1          (i:1, f:1.4013e-45)
+   79  21 *    GETREF   1
+   80  21 *    GETREF   3
+   81  21 *    CALLSYS  5, 144           (uint SpawnEnemy(ENEMY_TYPE, const VEC3&in, const VEC3&in, float, bool))
+   83  14 *    PSF      v3
+   84  16 *    CALLSYS  0, 139           (VEC3::~VEC3())
+               ObjInfo  v3, 0
+   86  14 *    PSF      v14
+   87  16 *    CALLSYS  0, 139           (VEC3::~VEC3())
+- 29,2 -
+               ObjInfo  v14, 0
+   89  14 *    SUSPEND
             0:
-   24  12 *    RET      0
+   90  14 *    RET      0

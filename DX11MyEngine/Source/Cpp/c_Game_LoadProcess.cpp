@@ -102,29 +102,31 @@ void c_Game_LoadProcess::OnExit(SceneManager* pOwner)
         assert(false);
     }
 
-    /* アリ モデルの生成 */
-    {
-        EnemyData::EnemyGroupSpawnData spawnData;
-        spawnData.enemyType = ENEMY_TYPE::GIANT_ANT_Normal;
-        spawnData.isAggro = true;
-        spawnData.position = VEC3(-150.0f, 0.0f, 0.0f);
-        spawnData.rotation = VEC3();
-        spawnData.hp = 200.0f;
-        spawnData.count = 100;
-        spawnData.spawnRadius = 10.0f;
-        EnemyFactory::SpawnEnemyGroup(spawnData);
-    }
+    Master::m_pScriptManager->ExcuteModuleFunction("MyModule", "void as_main()");
 
-    /* 八面体生成 */
-    {
-        EnemyData::EnemySpawnData spawnData;
-        spawnData.enemyType = ENEMY_TYPE::OCTAHEDRON;
-        spawnData.isAggro = true;
-        spawnData.position = VEC3(0.0f, 200.0f, 0.0f);
-        spawnData.rotation = VEC3();
-        spawnData.hp = 1000.0f;
-        EnemyFactory::SpawnEnemy(spawnData);
-    }
+    ///* アリ モデルの生成 */
+    //{
+    //    EnemyData::EnemyGroupSpawnData spawnData;
+    //    spawnData.enemyType = ENEMY_TYPE::GIANT_ANT_Normal;
+    //    spawnData.isAggro = true;
+    //    spawnData.position = VEC3(-150.0f, 0.0f, 0.0f);
+    //    spawnData.rotation = VEC3();
+    //    spawnData.hp = 200.0f;
+    //    spawnData.count = 100;
+    //    spawnData.spawnRadius = 10.0f;
+    //    EnemyFactory::SpawnEnemyGroup(spawnData);
+    //}
+
+    ///* 八面体生成 */
+    //{
+    //    EnemyData::EnemySpawnData spawnData;
+    //    spawnData.enemyType = ENEMY_TYPE::OCTAHEDRON;
+    //    spawnData.isAggro = true;
+    //    spawnData.position = VEC3(0.0f, 200.0f, 0.0f);
+    //    spawnData.rotation = VEC3();
+    //    spawnData.hp = 1000.0f;
+    //    EnemyFactory::SpawnEnemy(spawnData);
+    //}
 
 
     /* B-2 モデルの生成 */

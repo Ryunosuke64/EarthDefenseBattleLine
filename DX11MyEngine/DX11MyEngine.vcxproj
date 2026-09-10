@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Source/Lib/angelscript/add_on;../angelscript/sdk/angelscript/include;Source/Header;Source/Lib/DirectXTex;Source/Shader;Source/Lib/Imgui;Source/Lib/Imgui/backends;%(AdditionalIncludeDirectories);Source/Lib/Effekseer/Include/Effekseer;Source/Lib/Effekseer/Include/EffekseerRendererDX11;Source\Lib\nlohmann;Source\Lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source/Lib/angelscript/asbind20/include;Source/Lib/angelscript/add_on;../angelscript/sdk/angelscript/include;Source/Header;Source/Lib/DirectXTex;Source/Shader;Source/Lib/Imgui;Source/Lib/Imgui/backends;%(AdditionalIncludeDirectories);Source/Lib/Effekseer/Include/Effekseer;Source/Lib/Effekseer/Include/EffekseerRendererDX11;Source\Lib\nlohmann;Source\Lib</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -166,7 +166,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Source/Lib/angelscript/add_on;../angelscript/sdk/angelscript/include;Source/Header;Source/Lib/DirectXTex;Source/Lib/Imgui/backends;Source/Lib/Imgui;Source/Shader;%(AdditionalIncludeDirectories);Source/Lib/Effekseer/Include/Effekseer;Source/Lib/Effekseer/Include/EffekseerRendererDX11;Source\Lib\nlohmann;Source\Lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source/Lib/angelscript/asbind20/include;Source/Lib/angelscript/add_on;../angelscript/sdk/angelscript/include;Source/Header;Source/Lib/DirectXTex;Source/Lib/Imgui/backends;Source/Lib/Imgui;Source/Shader;%(AdditionalIncludeDirectories);Source/Lib/Effekseer/Include/Effekseer;Source/Lib/Effekseer/Include/EffekseerRendererDX11;Source\Lib\nlohmann;Source\Lib</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -387,6 +387,7 @@
     <ClInclude Include="Source\Lib\Imgui\imstb_rectpack.h" />
     <ClInclude Include="Source\Lib\Imgui\imstb_textedit.h" />
     <ClInclude Include="Source\Lib\Imgui\imstb_truetype.h" />
+    <None Include="cpp.hint" />
     <None Include="packages.config" />
     <None Include="Resource\MISSION_AS\test.as" />
     <None Include="Source\VS_Template\Template_Component.h" />

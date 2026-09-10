@@ -34,6 +34,9 @@ public:
     bool StartScript(const std::string& moduleName);
     bool UpdateScript(const std::string& moduleName, float deltaTime);
     void UnloadScript(const std::string& moduleName);
+
+    bool ExcuteModuleFunction(const std::string& _moduleName, const std::string& _funcName);
+
 private:
     // ÉRÉsÅ[ã÷é~
     ScriptManager(const ScriptManager&) = delete;

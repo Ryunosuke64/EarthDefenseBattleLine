@@ -6,8 +6,217 @@
 #include <angelscript/add_on/scriptmath/scriptmath.h>           // 数学関数を使えるようにする
 #include <angelscript/add_on/scripthelper/scripthelper.h>       // 数学関数を使えるようにする
 
+// [interface]がWindows SDKのものと衝突しているので、asbindのインクルード時に一時的に無効にする
+#pragma push_macro("interface")  // 現在のマクロを保存
+#undef interface                 // 一時的に無効化
+#include <asbind20/asbind.hpp>   // バインド用ライブラリ
+#pragma pop_macro("interface")   // 元のマクロに戻す
+
 using namespace Tool;
 using namespace VECTOR3;
+
+#include <fstream>
+
+void GeneratePredefined(
+    asIScriptEngine* engine,
+    const std::string& filePath)
+{
+    std::ofstream file(filePath);
+
+    if (!file.is_open())
+    {
+        return;
+    }
+
+    // ============================
+    // Object Type
+    // ============================
+
+    const asUINT objectCount = engine->GetObjectTypeCount();
+
+    for (asUINT i = 0; i < objectCount; ++i)
+    {
+        asITypeInfo* type = engine->GetObjectTypeByIndex(i);
+
+        if (type == nullptr)
+        {
+            continue;
+        }
+
+        const std::string typeName = type->GetName();
+
+        file << "class " << typeName << "\n";
+        file << "{\n";
+
+        // ----------------------------
+        // Constructor
+        // ----------------------------
+
+        const asUINT behaviourCount = type->GetBehaviourCount();
+
+        for (asUINT j = 0; j < behaviourCount; ++j)
+        {
+            asEBehaviours behaviour;
+
+            asIScriptFunction* func =
+                type->GetBehaviourByIndex(j, &behaviour);
+
+            if (func == nullptr)
+            {
+                continue;
+            }
+
+            if (behaviour == asBEHAVE_CONSTRUCT)
+            {
+                std::string decl =
+                    func->GetDeclaration(
+                        false,
+                        false,
+                        true
+                    );
+
+                // 例:
+                // void f(float x, float y)
+                //
+                // ↓
+                //
+                // VEC3(float x, float y);
+
+                const size_t paramPos = decl.find('(');
+
+                if (paramPos != std::string::npos)
+                {
+                    file << "    "
+                        << typeName
+                        << decl.substr(paramPos)
+                        << ";\n";
+                }
+            }
+        }
+
+        // ----------------------------
+        // Property
+        // ----------------------------
+
+        const asUINT propertyCount =
+            type->GetPropertyCount();
+
+        for (asUINT j = 0; j < propertyCount; ++j)
+        {
+            const char* decl =
+                type->GetPropertyDeclaration(j);
+
+            if (decl != nullptr)
+            {
+                file << "    "
+                    << decl
+                    << ";\n";
+            }
+        }
+
+        // ----------------------------
+        // Method
+        // ----------------------------
+
+        const asUINT methodCount =
+            type->GetMethodCount();
+
+        for (asUINT j = 0; j < methodCount; ++j)
+        {
+            asIScriptFunction* method =
+                type->GetMethodByIndex(j);
+
+            if (method == nullptr)
+            {
+                continue;
+            }
+
+            file << "    "
+                << method->GetDeclaration(
+                    false,
+                    false,
+                    true
+                )
+                << ";\n";
+        }
+
+        file << "}\n\n";
+    }
+
+    // ============================
+    // Enum
+    // ============================
+
+    const asUINT enumCount = engine->GetEnumCount();
+
+    for (asUINT i = 0; i < enumCount; ++i)
+    {
+        asITypeInfo* type =
+            engine->GetEnumByIndex(i);
+
+        if (type == nullptr)
+        {
+            continue;
+        }
+
+        file << "enum "
+            << type->GetName()
+            << "\n{\n";
+
+        const asUINT valueCount =
+            type->GetEnumValueCount();
+
+        for (asUINT j = 0; j < valueCount; ++j)
+        {
+            long long value = 0;
+
+            const char* name =
+                type->GetEnumValueByIndex(
+                    j,
+                    &value
+                );
+
+            file << "    "
+                << name
+                << " = "
+                << value;
+
+            if (j + 1 < valueCount)
+            {
+                file << ",";
+            }
+
+            file << "\n";
+        }
+
+        file << "}\n\n";
+    }
+
+    // ============================
+    // Global Function
+    // ============================
+
+    const asUINT functionCount =
+        engine->GetGlobalFunctionCount();
+
+    for (asUINT i = 0; i < functionCount; ++i)
+    {
+        asIScriptFunction* function =
+            engine->GetGlobalFunctionByIndex(i);
+
+        if (function == nullptr)
+        {
+            continue;
+        }
+
+        file << function->GetDeclaration(
+            false,
+            false,
+            true
+        )
+            << ";\n";
+    }
+}
 
 // メッセージコールバック
 void MessageCallback(const asSMessageInfo* msg, void* param)
@@ -80,70 +289,34 @@ bool ScriptManager::Init()
         // コアAPI
         RegisterCoreAPI(m_pEngine);
 
+        // 数学API
+        RegisterMathAPI(m_pEngine);
+
         // ゲームAPI
         RegisterGameObjectAPI(m_pEngine);
     }
 
+    // コンテキスト作成
+    m_pContext = m_pEngine->CreateContext();
+
     // =====================================
     // スクリプト読み込み
     // =====================================
-    // スクリプトビルダーでモジュール作成
-    CScriptBuilder builder;
-    r = builder.StartNewModule(m_pEngine, "MyModule");
-    if (r < 0)
+    bool isRes = false;
+    isRes = LoadScript("MyModule", "Resource/MISSION_AS/MISSION_01.as");
+    if (!isRes)
     {
-        ErrorMessage(L"モジュール作成失敗", L"ScriptManager");
         return false;
     }
 
-    r = builder.AddSectionFromFile("Resource/MISSION_AS/test.as");
-    if (r < 0)
-    {
-        ErrorMessage(L"ファイル読み込み失敗\n", L"ScriptManager");
-        return false;
-    }
-    
-    
-    // =====================================
-    // スクリプトをコンパイル
-    // =====================================
-    r = builder.BuildModule();
-    if (r < 0)
-    {
-        ErrorMessage(L"コンパイルが出来ませんでした\n", L"ScriptManager");
-        return false;
-    }
 
-    // モジュール取得
-    asIScriptModule* mod = m_pEngine->GetModule("MyModule");
-    if (!mod)
-    {
-        ErrorMessage(L"モジュールが見つかりません\n", L"ScriptManager");
-        return false;
-    }
 
-    // 関数取得
-	asIScriptFunction* func = mod->GetFunctionByDecl("void as_main(void)");
-    if (!func)
-    {
-        ErrorMessage(L"関数が見つかりません\n", L"ScriptManager");
-        return false;
-    }
-
-    // コンテキスト作成・準備・実行
-    m_pContext = m_pEngine->CreateContext();
-    m_pContext->Prepare(func);
-    r = m_pContext->Execute();
-    if (r != asEXECUTION_FINISHED)
-    {
-        if (r == asEXECUTION_EXCEPTION)
-        {
-            ErrorMessage(StringToWstring(m_pContext->GetExceptionString()), L"ScriptManager");
-        }
-    }
-
+    // デバッグ時のみ生成
+#ifdef _DEBUG
     // 登録済みAPIを出力
     WriteConfigToFile(m_pEngine, "AngelScriptAPI.txt");
+    GeneratePredefined(m_pEngine, "as.predefined");
+#endif
 
     return true;
 }
@@ -179,6 +352,50 @@ void ScriptManager::Term()
 
 
 //*---------------------------------------------------------------------------------------
+//*【?】モジュールの関数実行
+//*
+//* [引数] 
+//* _moduleName : モジュール名
+//* _funcName   : 関数名
+//* 
+//* [返値] 
+//* なし
+//*----------------------------------------------------------------------------------------
+bool ScriptManager::ExcuteModuleFunction(const std::string& _moduleName, const std::string& _funcName)
+{
+    int r = 0;
+
+    // モジュール取得
+    asIScriptModule* mod = m_pEngine->GetModule(_moduleName.c_str());
+    if (!mod)
+    {
+        ErrorMessage(L"モジュールが見つかりません\n", L"ScriptManager");
+        return false;
+    }
+
+    // 関数取得
+    asIScriptFunction* func = mod->GetFunctionByDecl(_funcName.c_str());
+    if (!func)
+    {
+        ErrorMessage(L"関数が見つかりません\n", L"ScriptManager");
+        return false;
+    }
+
+    // コンテキスト作成・準備・実行
+    m_pContext->Prepare(func);
+    r = m_pContext->Execute();
+    if (r != asEXECUTION_FINISHED)
+    {
+        if (r == asEXECUTION_EXCEPTION)
+        {
+            ErrorMessage(StringToWstring(m_pContext->GetExceptionString()), L"ScriptManager");
+        }
+        return false;
+    }
+}
+
+
+//*---------------------------------------------------------------------------------------
 //*【?】AngelScriptのスクリプトをロードする
 //*
 //* [引数] 
@@ -206,6 +423,16 @@ bool ScriptManager::LoadScript(const std::string& _moduleName, const std::string
     if (r < 0)
     {
         ErrorMessage(L"ファイル読み込み失敗\n", L"ScriptManager");
+        return false;
+    }
+
+    // =====================================
+    // スクリプトをコンパイル
+    // =====================================
+    r = builder.BuildModule();
+    if (r < 0)
+    {
+        ErrorMessage(L"コンパイルが出来ませんでした\n", L"ScriptManager");
         return false;
     }
 
@@ -271,23 +498,19 @@ void ScriptManager::RegisterCoreAPI(asIScriptEngine* engine)
     // =====================================
     // ErrorMesageBox
     // =====================================
-    r = engine->RegisterGlobalFunction(
+    asbind20::global(engine).function(
         "void ErrorMesageBox(const string &in  caption, const string &in msg)",
-        asFUNCTION(GIGA_Engine::ScriptAPI::Core::ErrorMesageBox),
-        asCALL_CDECL
+        &GIGA_Engine::ScriptAPI::Core::ErrorMesageBox
     );
-    assert(r >= 0);
-
 
     // =====================================
     // GetDeltaTime
     // =====================================
-    r = engine->RegisterGlobalFunction(
+    asbind20::global(engine).function(
         "float GetDeltaTime()",
-        asFUNCTION(GIGA_Engine::ScriptAPI::Core::GetDeltaTime),
-        asCALL_CDECL
+        &GIGA_Engine::ScriptAPI::Core::GetDeltaTime
     );
-    assert(r >= 0);
+
 }
 
 //*---------------------------------------------------------------------------------------
@@ -301,27 +524,19 @@ void ScriptManager::RegisterCoreAPI(asIScriptEngine* engine)
 //*----------------------------------------------------------------------------------------
 void ScriptManager::RegisterMathAPI(asIScriptEngine* engine)
 {
-    engine->RegisterObjectType(
+    // VEC3
+    asbind20::value_class<VEC3>(
+        engine,
         "VEC3",
-        sizeof(VEC3),
-        asOBJ_VALUE |
-        asGetTypeTraits<VEC3>() |
-        asOBJ_APP_CLASS_MORE_CONSTRUCTORS |
-        asOBJ_APP_CLASS_ALLFLOATS
-    );
-
-    engine->RegisterObjectProperty(
-        "VEC3", "float x",
-        asOFFSET(VEC3, x));
-
-    engine->RegisterObjectProperty(
-        "VEC3", "float y",
-        asOFFSET(VEC3, y));
-
-    engine->RegisterObjectProperty(
-        "VEC3", "float z",
-        asOFFSET(VEC3, z));
-
+        asOBJ_APP_CLASS_ALLFLOATS |
+        asOBJ_APP_CLASS_MORE_CONSTRUCTORS
+    )
+        .behaviours_by_traits()
+        .constructor<float>("float")
+        .constructor<float, float, float>("float, float, float")
+        .property("float x", &VEC3::x)
+        .property("float y", &VEC3::y)
+        .property("float z", &VEC3::z);
 }
 
 //*---------------------------------------------------------------------------------------
@@ -338,45 +553,33 @@ void ScriptManager::RegisterGameObjectAPI(asIScriptEngine* engine)
     int r = 0;
 
     // =====================================
-    // ENEMY_TYP
+    // ENEMY_TYPE
     // =====================================
-    r = engine->RegisterEnum("ENEMY_TYPE");
-    assert(r >= 0);
-
-    r = engine->RegisterEnumValue(
-        "ENEMY_TYPE",
-        "ANT",
-        static_cast<int>(EnemyData::ENEMY_TYPE::GIANT_ANT_Normal));
-    assert(r >= 0);
-
-    r = engine->RegisterEnumValue(
-        "ENEMY_TYPE",
-        "SPIDER",
-        static_cast<int>(EnemyData::ENEMY_TYPE::OCTAHEDRON));
-    assert(r >= 0);
-
+    asbind20::enum_<EnemyData::ENEMY_TYPE>(
+        engine,
+        "ENEMY_TYPE"
+    )
+        .value(EnemyData::ENEMY_TYPE::GIANT_ANT_Normal, "GIANT_ANT_Normal")
+        .value(EnemyData::ENEMY_TYPE::OCTAHEDRON, "OCTAHEDRON");
 
 
     // =====================================
     // SpawnEnemy
     // =====================================
-    r = engine->RegisterGlobalFunction(
-        "uint32 SpawnEnemy(ENEMY_TYPE type,const VEC3&in pos, const VEC3&in rot, float hp, bool isAgro)",
-        asFUNCTION(GIGA_Engine::ScriptAPI::Game::SpawnEnemy),
-        asCALL_CDECL
+    asbind20::global(engine).function(
+        "uint32 SpawnEnemy(ENEMY_TYPE type,const VEC3&in pos, const VEC3&in rot, float hp, bool isAggro)",
+        &GIGA_Engine::ScriptAPI::Game::SpawnEnemy
     );
-    assert(r >= 0);  
-    
 
     // =====================================
     // SpawnEnemyGroup
     // =====================================
-    r = engine->RegisterGlobalFunction(
-        "uint32 SpawnEnemyGroup(ENEMY_TYPE type, const VEC3&in pos, float spawnRadius, u_int count, float hp, bool isAgro)",
-        asFUNCTION(GIGA_Engine::ScriptAPI::Game::SpawnEnemyGroup),
-        asCALL_CDECL
+    asbind20::global(engine).function(
+        "uint32 SpawnEnemyGroup(ENEMY_TYPE type, const VEC3&in pos, float spawnRadius, uint32 count, float hp, bool isAggro)",
+        &GIGA_Engine::ScriptAPI::Game::SpawnEnemyGroup
     );
-    assert(r >= 0);
+
+
 }
 
 //*---------------------------------------------------------------------------------------

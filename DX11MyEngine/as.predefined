@@ -1,0 +1,133 @@
+class array
+{
+    T& opIndex(uint index);
+    const T& opIndex(uint index) const;
+    uint opForBegin() const;
+    bool opForEnd(uint) const;
+    uint opForNext(uint) const;
+    const T& opForValue0(uint index) const;
+    uint opForValue1(uint index) const;
+    T[]& opAssign(const T[]&in);
+    void insertAt(uint index, const T&in value);
+    void insertAt(uint index, const T[]&inout arr);
+    void insertLast(const T&in value);
+    void removeAt(uint index);
+    void removeLast();
+    void removeRange(uint start, uint count);
+    uint length() const;
+    void reserve(uint length);
+    void resize(uint length);
+    void sortAsc();
+    void sortAsc(uint startAt, uint count);
+    void sortDesc();
+    void sortDesc(uint startAt, uint count);
+    void reverse();
+    int find(const T&in value) const;
+    int find(uint startAt, const T&in value) const;
+    int findByRef(const T&in value) const;
+    int findByRef(uint startAt, const T&in value) const;
+    bool opEquals(const T[]&in) const;
+    bool isEmpty() const;
+    void sort(T[]::less&in, uint startAt = 0, uint count = uint(-1));
+}
+
+class string
+{
+    string();
+    string(const string&in);
+    string& opAssign(const string&in);
+    string& opAddAssign(const string&in);
+    bool opEquals(const string&in) const;
+    int opCmp(const string&in) const;
+    string opAdd(const string&in) const;
+    uint length() const;
+    void resize(uint);
+    bool isEmpty() const;
+    uint8& opIndex(uint);
+    const uint8& opIndex(uint) const;
+    string& opAssign(double);
+    string& opAddAssign(double);
+    string opAdd(double) const;
+    string opAdd_r(double) const;
+    string& opAssign(float);
+    string& opAddAssign(float);
+    string opAdd(float) const;
+    string opAdd_r(float) const;
+    string& opAssign(int64);
+    string& opAddAssign(int64);
+    string opAdd(int64) const;
+    string opAdd_r(int64) const;
+    string& opAssign(uint64);
+    string& opAddAssign(uint64);
+    string opAdd(uint64) const;
+    string opAdd_r(uint64) const;
+    string& opAssign(bool);
+    string& opAddAssign(bool);
+    string opAdd(bool) const;
+    string opAdd_r(bool) const;
+    string substr(uint start = 0, int count = -1) const;
+    int findFirst(const string&in, uint start = 0) const;
+    int findFirstOf(const string&in, uint start = 0) const;
+    int findFirstNotOf(const string&in, uint start = 0) const;
+    int findLast(const string&in, int start = -1) const;
+    int findLastOf(const string&in, int start = -1) const;
+    int findLastNotOf(const string&in, int start = -1) const;
+    void insert(uint pos, const string&in other);
+    void erase(uint pos, int count = -1);
+    int regexFind(const string&in regex, uint start = 0, uint&out lengthOfMatch = void) const;
+}
+
+class VEC3
+{
+    VEC3();
+    VEC3(const VEC3&in);
+    VEC3(float);
+    VEC3(float, float, float);
+    float x;
+    float y;
+    float z;
+    VEC3& opAssign(const VEC3&in);
+}
+
+enum ENEMY_TYPE
+{
+    GIANT_ANT_Normal = 0,
+    OCTAHEDRON = 1
+}
+
+uint scan(const string&in str, ?&out...);
+string format(const string&in fmt, const ?&in...);
+string formatInt(int64 val, const string&in options = "", uint width = 0);
+string formatUInt(uint64 val, const string&in options = "", uint width = 0);
+string formatFloat(double val, const string&in options = "", uint width = 0, uint precision = 0);
+int64 parseInt(const string&in, uint base = 10, uint&out byteCount = 0);
+uint64 parseUInt(const string&in, uint base = 10, uint&out byteCount = 0);
+double parseFloat(const string&in, uint&out byteCount = 0);
+float fpFromIEEE(uint);
+uint fpToIEEE(float);
+double fpFromIEEE(uint64);
+uint64 fpToIEEE(double);
+bool closeTo(float, float, float = 0.00001f);
+bool closeTo(double, double, double = 0.0000000001);
+float cos(float);
+float sin(float);
+float tan(float);
+float acos(float);
+float asin(float);
+float atan(float);
+float atan2(float, float);
+float cosh(float);
+float sinh(float);
+float tanh(float);
+float log(float);
+float log10(float);
+float pow(float, float);
+float sqrt(float);
+float ceil(float);
+float abs(float);
+float floor(float);
+float fraction(float);
+void ErrorMesageBox(const string&in caption, const string&in msg);
+float GetDeltaTime();
+uint SpawnEnemy(ENEMY_TYPE type, const VEC3&in pos, const VEC3&in rot, float hp, bool isAggro);
+uint SpawnEnemyGroup(ENEMY_TYPE type, const VEC3&in pos, float spawnRadius, uint count, float hp, bool isAggro);

@@ -1,5 +1,5 @@
-// AngelScript 2.39.0 WIP
-// Lib options  AS_64BIT_PTR AS_WIN AS_X64_MSVC 
+// AngelScript 2.39.0 WIP DEBUG
+// Lib options  AS_DEBUG AS_64BIT_PTR AS_WIN AS_X64_MSVC 
 // Engine properties
 ep 0 0
 ep 1 0
@@ -44,11 +44,15 @@ ep 39 0
 ep 40 1
 
 // Enums
+access ffffffff
+enum ENEMY_TYPE int
+enumval ENEMY_TYPE GIANT_ANT_Normal 0
+enumval ENEMY_TYPE OCTAHEDRON 1
 
 // Types
-access ffffffff
 objtype "array<T>" 69
 objtype "string" 7938
+objtype "VEC3" 2147615490
 funcdef "bool array<T>::less(const T&in, const T&in)"
 
 // Template type members
@@ -138,6 +142,15 @@ objmthd "string" "int findLastNotOf(const string&in, int = -1) const"
 objmthd "string" "void insert(uint, const string&in)"
 objmthd "string" "void erase(uint, int = -1)"
 objmthd "string" "int regexFind(const string&in, uint = 0, uint&out = void) const"
+objbeh "VEC3" 2 "void VEC3()"
+objbeh "VEC3" 0 "void VEC3()"
+objbeh "VEC3" 0 "void VEC3(const VEC3&in)"
+objbeh "VEC3" 0 "void VEC3(float)"
+objbeh "VEC3" 0 "void VEC3(float, float, float)"
+objmthd "VEC3" "VEC3& opAssign(const VEC3&in)"
+objprop "VEC3" "float x" 0 0
+objprop "VEC3" "float y" 0 0
+objprop "VEC3" "float z" 0 0
 
 // Functions
 func "uint scan(const string&in, ?&out...)"
@@ -174,6 +187,8 @@ func "float floor(float)"
 func "float fraction(float)"
 func "void ErrorMesageBox(const string&in, const string&in)"
 func "float GetDeltaTime()"
+func "uint SpawnEnemy(ENEMY_TYPE, const VEC3&in, const VEC3&in, float, bool)"
+func "uint SpawnEnemyGroup(ENEMY_TYPE, const VEC3&in, float, uint, float, bool)"
 
 // Properties
 
