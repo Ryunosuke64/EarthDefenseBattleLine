@@ -75,6 +75,31 @@ namespace EnemyData
 	};
 
 	
+	using EnemyGroupID = uint32_t;  // グループ用ID
+	
+	// エネミーID
+	struct EnemyID
+	{
+	    uint32_t index = UINT32_MAX;
+	    uint32_t generation = 0;        // 古いEnemyIDと区別するために使う
+	};
+	
+	// エネミースロット
+	struct EnemySlot
+	{
+	    std::weak_ptr<GameObject> enemy;
+	
+	    uint32_t generation = 0;
+	    bool active = false;
+	};
+	
+	// エネミーグループ
+	struct EnemyGroup
+	{
+	    EnemyGroupID id;
+	    std::vector<EnemyID> enemies;   // グループに所属するエネミーのIDを持つ（m_Enemiesのインデックス）
+	};
+	
 	// エネミー出現時のセットアップデータ
 	struct EnemySpawnData
 	{

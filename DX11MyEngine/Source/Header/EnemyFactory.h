@@ -23,8 +23,8 @@ public:
         bool isAggro = false;       // 攻撃状態か
     };
 
-    static u_int SpawnEnemy(const EnemyData::EnemySpawnData& spawnData);
-    static u_int SpawnEnemyGroup(const EnemyData::EnemyGroupSpawnData& spawnData);
+    static uint32_t SpawnEnemy(const EnemyData::EnemySpawnData& spawnData);
+    static uint32_t SpawnEnemyGroup(const EnemyData::EnemyGroupSpawnData& spawnData);
 
 private:
     static std::shared_ptr<GameObject> CreateAnt01(const EnemyGenerationData& generationData);

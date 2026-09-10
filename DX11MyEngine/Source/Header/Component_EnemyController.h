@@ -28,7 +28,6 @@ private:
 	class MoveLogic* m_pMoveLogicComp;				// 移動コンポーネント
 	class Physics* m_pPhysicsComp;					// 物理コンポーネント
 	class MyTransform* m_pTransformComp;			// トランスフォームコンポーネント
-
 	const GameObject* m_pTarget;					// 攻撃目標
 
 
@@ -46,6 +45,9 @@ private:
 	bool m_IsAnim;					// アニメーション中かどうか
 	bool m_IsGrounded;				// 接地しているか
 	bool m_IsOnDamage;				// ダメージフラグ
+
+	EnemyData::EnemyID m_MyID;					// 自分自身のID
+	EnemyData::EnemyGroupID m_MyGroupID;		// 自分が所属しているグループ（-1なら所属無し）
 
 public:
 	EnemyController(std::weak_ptr<GameObject> pOwner, int updateRank);
@@ -114,6 +116,18 @@ public:
 	/* ダメージフラグ */
 	bool get_IsOnDamage()const { return m_IsOnDamage; }
 
+	/* エネミーIDの設定
+	* ※グループでない場合は、**EnemyGroupID** は-1に設定してね
+	*/
+	void set_EnemyID(const EnemyData::EnemyID& _id, const EnemyData::EnemyGroupID _groupID)
+	{
+		m_MyID = _id;
+		m_MyGroupID = _groupID;
+	};
+
+	/* エネミーIDの取得 */
+	const EnemyData::EnemyID& get_EnemyID()const { return m_MyID; }
+	const EnemyData::EnemyGroupID& get_GroupID()const { return m_MyGroupID; };
 
 
 	// =========================================================================================

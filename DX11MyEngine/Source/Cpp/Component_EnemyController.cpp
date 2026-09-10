@@ -42,7 +42,9 @@ EnemyController::EnemyController(std::weak_ptr<GameObject> pOwner, int updateRan
 	m_pTarget(nullptr),
 	m_pTransformComp(nullptr),
 	m_Gravity(18.0f),
-	m_AnimSpeed(1.25f)
+	m_AnimSpeed(1.25f),
+	m_MyGroupID(-1),
+	m_MyID(-1)
 {
     this->set_Tag("EnemyController");
 }
@@ -99,7 +101,8 @@ void EnemyController::Start(RendererEngine& renderer)
 	m_pHealthComp->RegisterOnDead(
 		[this, &renderer]
 		{
-
+			// マネージャーから除外する
+			Master::m_pEnemyManager->UnregisterEnemy(m_MyID);
 		}
 	);
 

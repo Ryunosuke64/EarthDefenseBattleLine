@@ -110,7 +110,7 @@ void c_Game_LoadProcess::OnExit(SceneManager* pOwner)
         spawnData.position = VEC3(-150.0f, 0.0f, 0.0f);
         spawnData.rotation = VEC3();
         spawnData.hp = 200.0f;
-        spawnData.count = 500;
+        spawnData.count = 100;
         spawnData.spawnRadius = 10.0f;
         EnemyFactory::SpawnEnemyGroup(spawnData);
     }

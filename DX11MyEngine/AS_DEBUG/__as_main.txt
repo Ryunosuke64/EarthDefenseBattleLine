@@ -25,7 +25,7 @@ Variables:
 - 6,5 -
    13  12 *    SUSPEND
    14  12 *    PSF      v12
-   15  14 *    PGA      0xd22e6790          (str:デルタタイム)
+   15  14 *    PGA      0xfa31a0a0          (str:デルタタイム)
    18  16 *    CALLSYS  2, 136           (void ErrorMesageBox(const string&in, const string&in))
 - 7,2 -
    20  12 *    SUSPEND

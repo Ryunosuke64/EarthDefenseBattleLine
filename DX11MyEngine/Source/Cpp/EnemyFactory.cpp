@@ -35,7 +35,7 @@ using namespace EnemyData;
 //* [返値]
 //* 生成したエネミーのID
 //*----------------------------------------------------------------------------------------
-u_int EnemyFactory::SpawnEnemy(const EnemyData::EnemySpawnData& spawnData)
+uint32_t EnemyFactory::SpawnEnemy(const EnemyData::EnemySpawnData& spawnData)
 {
     std::shared_ptr<GameObject>generatedObject;
     EnemyGenerationData generationData;
@@ -43,7 +43,6 @@ u_int EnemyFactory::SpawnEnemy(const EnemyData::EnemySpawnData& spawnData)
     generationData.position = spawnData.position;
     generationData.rotation = spawnData.rotation;
     generationData.hp = spawnData.hp;
-    u_int resID = 0;
 
     // 指定タイプのエネミーを生成
     switch (spawnData.enemyType)
@@ -72,7 +71,11 @@ u_int EnemyFactory::SpawnEnemy(const EnemyData::EnemySpawnData& spawnData)
         break;
     };
 
-    return resID;
+    // エネミーマネージャーに登録し、IDを取得
+    EnemyID id = Master::m_pEnemyManager->RegisterEnemy(generatedObject);
+
+    // インデックスを外部に渡す
+    return id.index;
 }
 
 //*---------------------------------------------------------------------------------------
@@ -83,14 +86,14 @@ u_int EnemyFactory::SpawnEnemy(const EnemyData::EnemySpawnData& spawnData)
 //* [返値]
 //* 生成したグループのID
 //*----------------------------------------------------------------------------------------
-u_int EnemyFactory::SpawnEnemyGroup(const EnemyData::EnemyGroupSpawnData& spawnData)
+uint32_t EnemyFactory::SpawnEnemyGroup(const EnemyData::EnemyGroupSpawnData& spawnData)
 {
     std::shared_ptr<GameObject>generatedObject;
     EnemyGenerationData generationData;
     generationData.isAggro = spawnData.isAggro;
     generationData.hp = spawnData.hp;
-    u_int resID = 0;
-    
+    std::vector<std::weak_ptr<GameObject>>enemies;  // マネージャーに渡す用
+
     
     for (int i = 0; i < spawnData.count; i++)
     {
@@ -137,8 +140,15 @@ u_int EnemyFactory::SpawnEnemyGroup(const EnemyData::EnemyGroupSpawnData& spawnD
         default:
             break;
         };
+
+        // 配列に追加
+        enemies.push_back(generatedObject);
     }
-    return resID;
+
+    // エネミーマネージャーにグループを登録し、IDを取得
+    EnemyGroupID id = Master::m_pEnemyManager->RegisterEnemyGroup(enemies);
+
+    return id;
 }
 
 
